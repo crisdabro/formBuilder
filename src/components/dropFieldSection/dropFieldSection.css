@@ -1,0 +1,14 @@
+.input-border {
+  text-align: start;
+}
+
+.input {
+  border: 0px solid #ccc;
+  text-align: start;
+  padding: 0px;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: none;
+}
