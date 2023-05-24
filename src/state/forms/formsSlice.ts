@@ -5,7 +5,7 @@ import {
   current,
 } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../store";
-import { Form, Field } from "./types";
+import { Form, Field, Language } from "./types";
 import { STATUS } from "../../helpers/constants";
 
 export interface FormState {
@@ -16,6 +16,9 @@ const initialState: FormState = {
     name: "form",
     status: "idle",
     fields: [],
+    options: {
+      languages: ["castellano"],
+    },
   },
 };
 
@@ -27,6 +30,31 @@ export const formsSlice = createSlice({
     addField: (state, action: PayloadAction<Field>) => {
       state.form.fields.push(action.payload);
     },
+    updateField: (state, action: PayloadAction<Field>) => {
+      state.form.fields = state.form.fields.map((f: Field) =>
+        f.id === action.payload.id ? action.payload : f
+      );
+    },
+    addLanguage: (state, action: PayloadAction<string>) => {
+      state.form.options.languages.push(action.payload as Language);
+      state.form.fields = state.form.fields.map((f: Field) => ({
+        ...f,
+        texts: f.texts.concat({
+          id: action.payload,
+          label: "",
+          placeholder: "",
+        }),
+      }));
+    },
+    removeLanguage: (state, action: PayloadAction<string>) => {
+      state.form.options.languages = state.form.options.languages.filter(
+        (l) => l !== action.payload
+      );
+      state.form.fields = state.form.fields.map((f: Field) => ({
+        ...f,
+        texts: f.texts.filter((t) => t.id !== action.payload),
+      }));
+    },
   },
 
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -34,7 +62,8 @@ export const formsSlice = createSlice({
   extraReducers: (builder) => {},
 });
 
-export const { addField } = formsSlice.actions;
+export const { addField, updateField, removeLanguage, addLanguage } =
+  formsSlice.actions;
 
 export const selectForms = (state: RootState) => state.forms;
 

@@ -7,44 +7,44 @@ import {
   FormLabel,
   FormHelperText,
   FormErrorMessage,
+  VStack,
+  HStack,
+  Button,
 } from "@chakra-ui/react";
 import { Field } from "../../state/forms/types";
 import "./inputField.css";
 
 interface Props {
   field: Field;
-  isEditing?: boolean;
+  handleShowAddFieldModal: (
+    show: boolean,
+    field: Field,
+    isEditing: boolean
+  ) => void;
 }
 
-const InputField = ({ field, isEditing = false }: Props) => {
-  const { value, label, placeholder, helper, readOnly } = field;
+const InputField = ({ field, handleShowAddFieldModal }: Props) => {
+  const { value, texts, readOnly } = field;
+  const { label, helper, placeholder } = texts[0];
+
+  const handleEditClick = () => {
+    handleShowAddFieldModal(true, field, true);
+  };
+
   return (
-    <Box style={{ marginTop: "8px", width: "100%" }}>
-      <FormControl isInvalid={false}>
-        {isEditing ? (
-          <>
-            {label && (
-              <Input className="input" type="text" placeholder={"label"} />
-            )}
-            <Input
-              className="input-border"
-              type="text"
-              placeholder="place holder"
-            />
-            {helper && (
-              <Input className="input" type="text" placeholder="helper" />
-            )}
-          </>
-        ) : (
-          <>
-            <FormLabel>{label}</FormLabel>
-            <Input type="text" placeholder={value} readOnly={readOnly} />
-            <FormHelperText>{helper}</FormHelperText>
-          </>
-        )}
-        <FormErrorMessage>error.</FormErrorMessage>
-      </FormControl>
-    </Box>
+    <HStack className="field">
+      <Box>
+        <Button className="hide" onClick={handleEditClick} />
+      </Box>
+      <Box style={{ marginTop: "8px", width: "100%" }}>
+        <FormControl isInvalid={false}>
+          <FormLabel>{label}</FormLabel>
+          <Input type="text" placeholder={placeholder} readOnly />
+          <FormHelperText>{helper}</FormHelperText>
+          <FormErrorMessage>error.</FormErrorMessage>
+        </FormControl>
+      </Box>
+    </HStack>
   );
 };
 

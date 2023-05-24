@@ -10,22 +10,29 @@ import { STATUS } from "../../helpers/constants";
 
 export interface FormState {
   fields: Field[];
+  isDragging: boolean;
 }
 const initialState: FormState = {
   fields: [
     {
       id: "1",
       name: "Text Input",
-      label: "label text",
+      texts: [
+        {
+          id: "castellano",
+          label: "label",
+          placeholder: "enter text",
+          helper: "helper text",
+        },
+      ],
       type: "text",
       value: "",
-      placeholder: "enter text",
-      helper: "helper text",
       required: true,
       readOnly: false,
       isDragging: false,
     },
   ],
+  isDragging: false,
 };
 
 export const fieldsSlice = createSlice({
@@ -34,12 +41,14 @@ export const fieldsSlice = createSlice({
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     startDrag: (state, action: PayloadAction<string>) => {
+      state.isDragging = true;
       const field = state.fields.find((f) => f.id === action.payload);
       if (field) {
         field.isDragging = true;
       }
     },
     endDrag: (state, action: PayloadAction<string>) => {
+      state.isDragging = false;
       const field = state.fields.find((f) => f.id === action.payload);
       if (field) {
         field.isDragging = true;

@@ -14,33 +14,30 @@ import "./buttonField.css";
 
 interface Props {
   field?: Field;
-  isEditing?: boolean;
 }
 
 const ButtonField = ({
   field = {
     id: "confirm",
-    label: "",
+    texts: [
+      {
+        id: "castellano",
+        placeholder: "Confirmar",
+      },
+    ],
     type: "text",
     value: "Button text",
-    placeholder: "Button text",
     required: true,
     readOnly: false,
   },
-  isEditing = false,
 }: Props) => {
-  const { label, helper, readOnly } = field || {};
+  const { texts, readOnly } = field || {};
+  const { placeholder } = texts[0] || {};
   return (
     <Box style={{ marginTop: "8px", width: "100%" }}>
-      {isEditing ? (
-        <Button className="button" colorScheme="blue">
-          <InputField field={field} isEditing />
-        </Button>
-      ) : (
-        <Button style={{ width: "100%" }} colorScheme="blue">
-          {label}
-        </Button>
-      )}
+      <Button style={{ width: "100%" }} colorScheme="blue">
+        {placeholder}
+      </Button>
     </Box>
   );
 };

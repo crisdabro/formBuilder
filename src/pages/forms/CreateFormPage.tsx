@@ -20,32 +20,20 @@ import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import FieldsPanel from "../../components/fieldsPanel/FieldsPanel";
 import FormView from "../../components/formView/FormView";
 import { selectForms, addField } from "../../state/forms/formsSlice";
+import FormOptionsPanel from "../../components/formOptionsPanel/FormOptionsPanel";
 
 const CreateFormPage = () => {
   const dispatch = useAppDispatch();
   const { form } = useAppSelector(selectForms);
 
-  useEffect(() => {
-    dispatch(
-      addField({
-        id: "field 3",
-        label: "field 3",
-        type: "text",
-        value: "",
-        placeholder: "enter text",
-        helper: "helper text",
-        required: true,
-        readOnly: false,
-      })
-    );
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Box>
       <HStack justifyContent="space-between" alignItems="start">
         <FieldsPanel />
         <FormView form={form} />
-        <FieldsPanel />
+        <FormOptionsPanel />
       </HStack>
     </Box>
   );

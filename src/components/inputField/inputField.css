@@ -12,3 +12,12 @@
   outline: none;
   box-shadow: none;
 }
+
+.hide {
+  display: none;
+}
+
+.field:hover .hide {
+  display: block;
+  margin-left: -40px;
+}

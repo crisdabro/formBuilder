@@ -3,3 +3,5 @@ export const STATUS = {
   LOADING: "loading",
   FAILED: "failed",
 };
+
+export const LANGUAGES = ["castellano", "english", "catallà"];
