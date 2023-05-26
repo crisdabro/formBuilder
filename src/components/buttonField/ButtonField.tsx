@@ -10,10 +10,16 @@ import {
 } from "@chakra-ui/react";
 import { Field } from "../../state/forms/types";
 import InputField from "../inputField/InputField";
+import EditButtonWrapper from "../editButtonWrapper/EditButtonWrapper";
 import "./buttonField.css";
 
 interface Props {
   field?: Field;
+  handleShowAddFieldModal: (
+    show: boolean,
+    field: Field,
+    isEditing: boolean
+  ) => void;
 }
 
 const ButtonField = ({
@@ -25,20 +31,25 @@ const ButtonField = ({
         placeholder: "Confirmar",
       },
     ],
-    type: "text",
+    type: "button",
     value: "Button text",
     required: true,
     readOnly: false,
   },
+  handleShowAddFieldModal,
 }: Props) => {
   const { texts, readOnly } = field || {};
   const { placeholder } = texts[0] || {};
   return (
-    <Box style={{ marginTop: "8px", width: "100%" }}>
-      <Button style={{ width: "100%" }} colorScheme="blue">
-        {placeholder}
-      </Button>
-    </Box>
+    <EditButtonWrapper
+      callback={() => handleShowAddFieldModal(true, field, true)}
+    >
+      <Box style={{ marginTop: "8px", width: "100%" }}>
+        <Button style={{ width: "100%" }} colorScheme="blue">
+          {placeholder}
+        </Button>
+      </Box>
+    </EditButtonWrapper>
   );
 };
 

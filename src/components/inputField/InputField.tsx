@@ -12,6 +12,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { Field } from "../../state/forms/types";
+import EditButtonWrapper from "../editButtonWrapper/EditButtonWrapper";
 import "./inputField.css";
 
 interface Props {
@@ -27,15 +28,10 @@ const InputField = ({ field, handleShowAddFieldModal }: Props) => {
   const { value, texts, readOnly } = field;
   const { label, helper, placeholder } = texts[0];
 
-  const handleEditClick = () => {
-    handleShowAddFieldModal(true, field, true);
-  };
-
   return (
-    <HStack className="field">
-      <Box>
-        <Button className="hide" onClick={handleEditClick} />
-      </Box>
+    <EditButtonWrapper
+      callback={() => handleShowAddFieldModal(true, field, true)}
+    >
       <Box style={{ marginTop: "8px", width: "100%" }}>
         <FormControl isInvalid={false}>
           <FormLabel>{label}</FormLabel>
@@ -44,7 +40,7 @@ const InputField = ({ field, handleShowAddFieldModal }: Props) => {
           <FormErrorMessage>error.</FormErrorMessage>
         </FormControl>
       </Box>
-    </HStack>
+    </EditButtonWrapper>
   );
 };
 

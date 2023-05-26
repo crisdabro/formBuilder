@@ -1,7 +1,7 @@
 export interface Field {
   id: string;
   value: string;
-  type: string;
+  type: InputType;
   texts: FieldTexts[];
   required: boolean;
   readOnly: boolean;
@@ -12,7 +12,7 @@ export interface Field {
 export interface FieldTexts {
   id: string;
   label?: string;
-  placeholder: string;
+  placeholder?: string;
   helper?: string;
 }
 
@@ -35,3 +35,5 @@ export interface DragEvent {
 export type Status = "idle" | "loading" | "failed";
 
 export type Language = "castellano" | "english" | "catallà";
+
+export type InputType = "textInput" | "text" | "button";

@@ -12,8 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { Field } from "../../state/forms/types";
-import { selectFields } from "../../state/forms/fieldsSlice";
-import { addField } from "../../state/forms/formsSlice";
+import { selectForms } from "../../state/forms/formsSlice";
 import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import "./dropFieldSection.css";
 
@@ -27,11 +26,13 @@ interface Props {
 
 const DropFieldSection = ({ handleShowAddFieldModal }: Props) => {
   const dispatch = useAppDispatch();
-  const { fields, isDragging } = useAppSelector(selectFields);
+  const { templateFields, isDragging } = useAppSelector(selectForms);
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    const field = fields.find((f) => f.id === e.dataTransfer.getData("text"));
+    const field = templateFields.find(
+      (f) => f.id === e.dataTransfer.getData("text")
+    );
     if (field) {
       handleShowAddFieldModal(true, field, false);
     }

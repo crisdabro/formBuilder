@@ -1,16 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Text, Box, VStack, Heading } from "@chakra-ui/react";
 import { Field } from "../../state/forms/types";
-import {
-  selectFields,
-  startDrag,
-  endDrag,
-} from "../../state/forms/fieldsSlice";
+import { selectForms, startDrag, endDrag } from "../../state/forms/formsSlice";
 import { useAppDispatch, useAppSelector } from "../../state/hooks";
 
 const FieldsPanel = () => {
   const dispatch = useAppDispatch();
-  const { fields } = useAppSelector(selectFields);
+  const { templateFields } = useAppSelector(selectForms);
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>, id: string) => {
     e.dataTransfer.setData("text", `${id}`);
@@ -24,7 +20,7 @@ const FieldsPanel = () => {
   return (
     <VStack backgroundColor="blue.100" padding={2}>
       <Heading>Fields</Heading>
-      {fields.map((field: Field) => {
+      {templateFields.map((field: Field) => {
         return (
           <Box
             key={field.id}

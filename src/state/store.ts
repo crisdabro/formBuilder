@@ -1,11 +1,9 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import formsReducer from "./forms/formsSlice";
-import fieldsReducer from "./forms/fieldsSlice";
 
 export const store = configureStore({
   reducer: {
     forms: formsReducer,
-    fields: fieldsReducer,
   },
 });
 

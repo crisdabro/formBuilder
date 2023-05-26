@@ -3,6 +3,7 @@ import { Text, Box, Button, VStack } from "@chakra-ui/react";
 import { Form } from "../../state/forms/types";
 import InputField from "../inputField/InputField";
 import ButtonField from "../buttonField/ButtonField";
+import TextField from "../textField/TextField";
 import DropFieldSection from "../dropFieldSection/DropFieldSection";
 import AddFieldModal from "../addFieldModal/AddFieldModal";
 import { Field } from "../../state/forms/types";
@@ -36,19 +37,42 @@ const FormView = ({ form }: Props) => {
           isEditing={isEditing}
         />
       )}
-      {form.fields.map((field) => {
-        return (
-          <>
-            <InputField
-              key={field.id}
-              field={field}
-              handleShowAddFieldModal={handleShowAddFieldModal}
-            />
-          </>
-        );
-      })}
+      {form.fields
+        .filter(({ type }) => type !== "button")
+        .map((field) => {
+          return (
+            <>
+              {field.type === "text" && (
+                <TextField
+                  key={field.id}
+                  field={field}
+                  handleShowAddFieldModal={handleShowAddFieldModal}
+                />
+              )}
+              {field.type === "textInput" && (
+                <InputField
+                  key={field.id}
+                  field={field}
+                  handleShowAddFieldModal={handleShowAddFieldModal}
+                />
+              )}
+            </>
+          );
+        })}
       <DropFieldSection handleShowAddFieldModal={handleShowAddFieldModal} />
-      <ButtonField key={"confirm-button"} />
+      {form.fields
+        .filter(({ type }) => type === "button")
+        .map((field) => {
+          return (
+            <>
+              <ButtonField
+                key={field.id}
+                field={field}
+                handleShowAddFieldModal={handleShowAddFieldModal}
+              />
+            </>
+          );
+        })}
     </VStack>
   );
 };

@@ -1,0 +1,12 @@
+.hide {
+  display: none;
+}
+
+.field:hover .hide {
+  display: block;
+  margin-left: -40px;
+}
+
+.field {
+  width: 100%;
+}

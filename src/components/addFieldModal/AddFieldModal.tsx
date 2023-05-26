@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useId } from "react";
 import {
   ModalCloseButton,
   Box,
@@ -29,11 +29,11 @@ interface Props {
 const AddFieldModal = ({ field, visible, onClose, isEditing }: Props) => {
   const dispatch = useAppDispatch();
   const { form } = useAppSelector(selectForms);
+  const formId = useId();
 
   const [formValues, setFormValues] = useState(field.texts);
 
-  const onChange = (language: any, type: any, value: any) => {
-    console.log(language, type, value);
+  const onChange = (language: string, type: string, value: string) => {
     const newFormValues = formValues.map((formValue) => {
       if (formValue.id === language) {
         return { ...formValue, [type]: value };
@@ -46,28 +46,33 @@ const AddFieldModal = ({ field, visible, onClose, isEditing }: Props) => {
   const handleAddButton = () => {
     isEditing
       ? dispatch(updateField({ ...field, texts: formValues }))
-      : dispatch(addField({ ...field, texts: formValues }));
+      : dispatch(addField({ ...field, id: formId, texts: formValues }));
+    onClose();
   };
 
   return (
     <Modal closeOnOverlayClick={false} isOpen={visible} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Agregar Campo</ModalHeader>
+        <ModalHeader>
+          {isEditing ? "Editar Campo" : "Agregar Campo"}
+        </ModalHeader>
         <ModalBody pb={6}>
           {formValues.map(({ id, label, placeholder }) => {
             return (
               <VStack>
                 <Box>{id}</Box>
                 <VStack justifyContent="space-evenly">
-                  <Box>
-                    Etiqueta:
-                    <Input
-                      type="text"
-                      value={label}
-                      onChange={(e) => onChange(id, "label", e.target.value)}
-                    />
-                  </Box>
+                  {field.type === "textInput" && (
+                    <Box>
+                      Etiqueta:
+                      <Input
+                        type="text"
+                        value={label}
+                        onChange={(e) => onChange(id, "label", e.target.value)}
+                      />
+                    </Box>
+                  )}
                   <Box>
                     Campo:
                     <Input
@@ -86,7 +91,7 @@ const AddFieldModal = ({ field, visible, onClose, isEditing }: Props) => {
         <ModalCloseButton />
         <ModalFooter>
           <Button onClick={handleAddButton} colorScheme="blue" mr={3}>
-            Agregar
+            {isEditing ? "Editar" : "Agregar"}
           </Button>
           <Button onClick={onClose}>Cancel</Button>
         </ModalFooter>
