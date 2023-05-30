@@ -21,9 +21,14 @@ interface Props {
     field: Field,
     isEditing: boolean
   ) => void;
+  color: string;
 }
 
-const TextField = ({ field, handleShowAddFieldModal }: Props) => {
+const TextField = ({
+  field,
+  handleShowAddFieldModal,
+  color = "black",
+}: Props) => {
   const { texts } = field;
   const { helper, placeholder } = texts[0];
 
@@ -31,9 +36,9 @@ const TextField = ({ field, handleShowAddFieldModal }: Props) => {
     <EditButtonWrapper
       callback={() => handleShowAddFieldModal(true, field, true)}
     >
-      <Box style={{ marginTop: "8px", width: "100%" }}>
+      <Box style={{ width: "100%", margin: "8px 0px 0px 0px" }}>
         <FormControl isInvalid={false}>
-          <FormLabel>{placeholder}</FormLabel>
+          <FormLabel color={color}>{placeholder}</FormLabel>
         </FormControl>
       </Box>
     </EditButtonWrapper>

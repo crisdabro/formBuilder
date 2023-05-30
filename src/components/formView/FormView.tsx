@@ -23,12 +23,22 @@ const FormView = ({ form }: Props) => {
     isEditing: boolean
   ) => {
     setShowAddFieldModal(show);
-    setField(field);
+    setField({ ...field, isDragging: false });
     setIsEditing(isEditing);
   };
 
   return (
-    <VStack>
+    <VStack
+      justifyContent="center"
+      alignItems="center"
+      style={{
+        border: "1px solid black",
+        backgroundColor: form.options.mainColor,
+        minHeight: "50px",
+        minWidth: "400px",
+        padding: "10px",
+      }}
+    >
       {showAddFieldModal && (
         <AddFieldModal
           field={field}
@@ -45,6 +55,7 @@ const FormView = ({ form }: Props) => {
               {field.type === "text" && (
                 <TextField
                   key={field.id}
+                  color={form.options.secondaryColor}
                   field={field}
                   handleShowAddFieldModal={handleShowAddFieldModal}
                 />
@@ -52,6 +63,8 @@ const FormView = ({ form }: Props) => {
               {field.type === "textInput" && (
                 <InputField
                   key={field.id}
+                  mainColor={form.options.mainColor}
+                  secondaryColor={form.options.secondaryColor}
                   field={field}
                   handleShowAddFieldModal={handleShowAddFieldModal}
                 />
@@ -67,6 +80,8 @@ const FormView = ({ form }: Props) => {
             <>
               <ButtonField
                 key={field.id}
+                mainColor={form.options.mainColor}
+                secondaryColor={form.options.secondaryColor}
                 field={field}
                 handleShowAddFieldModal={handleShowAddFieldModal}
               />

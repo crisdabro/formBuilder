@@ -6,7 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../store";
 import { Form, Field, Language } from "./types";
-import { STATUS } from "../../helpers/constants";
+import { MAX_ORDER, STATUS } from "../../helpers/constants";
 
 export interface FormState {
   form: Form;
@@ -20,6 +20,7 @@ const initialState: FormState = {
     fields: [
       {
         id: "1",
+        order: 9999,
         name: "Text Input",
         texts: [
           {
@@ -36,6 +37,8 @@ const initialState: FormState = {
     ],
     options: {
       languages: ["castellano"],
+      mainColor: "white",
+      secondaryColor: "black",
     },
   },
   templateFields: [
@@ -80,7 +83,17 @@ export const formsSlice = createSlice({
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     addField: (state, action: PayloadAction<Field>) => {
-      state.form.fields.push(action.payload);
+      const maxOrder = Math.max(
+        ...state.form.fields
+          .filter((f) => f.order !== MAX_ORDER)
+          .map((f) => f.order!)
+      );
+
+      state.form.fields.push({
+        ...action.payload,
+        order: maxOrder === -Infinity ? 1 : maxOrder + 1,
+      });
+      state.form.fields.sort((a, b) => a.order! - b.order!);
     },
     updateField: (state, action: PayloadAction<Field>) => {
       state.form.fields = state.form.fields.map((f: Field) =>
@@ -98,7 +111,7 @@ export const formsSlice = createSlice({
       state.isDragging = false;
       const field = state.templateFields.find((f) => f.id === action.payload);
       if (field) {
-        field.isDragging = true;
+        field.isDragging = false;
       }
     },
     addLanguage: (state, action: PayloadAction<string>) => {
@@ -136,6 +149,12 @@ export const formsSlice = createSlice({
         }));
       }
     },
+    updateMainColor: (state, action: PayloadAction<string>) => {
+      state.form.options.mainColor = action.payload;
+    },
+    updateSecondaryColor: (state, action: PayloadAction<string>) => {
+      state.form.options.secondaryColor = action.payload;
+    },
   },
 
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -150,6 +169,8 @@ export const {
   endDrag,
   removeLanguage,
   addLanguage,
+  updateMainColor,
+  updateSecondaryColor,
 } = formsSlice.actions;
 
 export const selectForms = (state: RootState) => state.forms;

@@ -1,5 +1,6 @@
 export interface Field {
   id: string;
+  order?: number;
   value: string;
   type: InputType;
   texts: FieldTexts[];
@@ -18,6 +19,8 @@ export interface FieldTexts {
 
 export interface Options {
   languages: Language[];
+  mainColor: string;
+  secondaryColor: string;
 }
 
 export interface Form {

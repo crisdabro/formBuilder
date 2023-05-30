@@ -22,9 +22,16 @@ interface Props {
     field: Field,
     isEditing: boolean
   ) => void;
+  mainColor: string;
+  secondaryColor: string;
 }
 
-const InputField = ({ field, handleShowAddFieldModal }: Props) => {
+const InputField = ({
+  field,
+  handleShowAddFieldModal,
+  mainColor = "white",
+  secondaryColor = "black",
+}: Props) => {
   const { value, texts, readOnly } = field;
   const { label, helper, placeholder } = texts[0];
 
@@ -32,10 +39,16 @@ const InputField = ({ field, handleShowAddFieldModal }: Props) => {
     <EditButtonWrapper
       callback={() => handleShowAddFieldModal(true, field, true)}
     >
-      <Box style={{ marginTop: "8px", width: "100%" }}>
+      <Box style={{ width: "100%", margin: "8px 0px 0px 0px" }}>
         <FormControl isInvalid={false}>
-          <FormLabel>{label}</FormLabel>
-          <Input type="text" placeholder={placeholder} readOnly />
+          <FormLabel color={secondaryColor}>{label}</FormLabel>
+          <Input
+            _placeholder={{ color: secondaryColor }}
+            borderColor={secondaryColor}
+            type="text"
+            placeholder={placeholder}
+            readOnly
+          />
           <FormHelperText>{helper}</FormHelperText>
           <FormErrorMessage>error.</FormErrorMessage>
         </FormControl>

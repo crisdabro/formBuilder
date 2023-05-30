@@ -20,6 +20,8 @@ interface Props {
     field: Field,
     isEditing: boolean
   ) => void;
+  mainColor?: string;
+  secondaryColor?: string;
 }
 
 const ButtonField = ({
@@ -37,6 +39,8 @@ const ButtonField = ({
     readOnly: false,
   },
   handleShowAddFieldModal,
+  mainColor = "white",
+  secondaryColor = "black",
 }: Props) => {
   const { texts, readOnly } = field || {};
   const { placeholder } = texts[0] || {};
@@ -44,8 +48,12 @@ const ButtonField = ({
     <EditButtonWrapper
       callback={() => handleShowAddFieldModal(true, field, true)}
     >
-      <Box style={{ marginTop: "8px", width: "100%" }}>
-        <Button style={{ width: "100%" }} colorScheme="blue">
+      <Box style={{ width: "100%", margin: "8px 0px 0px 0px" }}>
+        <Button
+          style={{ width: "100%" }}
+          color={mainColor}
+          backgroundColor={secondaryColor}
+        >
           {placeholder}
         </Button>
       </Box>

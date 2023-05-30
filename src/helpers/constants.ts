@@ -5,3 +5,4 @@ export const STATUS = {
 };
 
 export const LANGUAGES = ["castellano", "english", "catallà"];
+export const MAX_ORDER = 9999;
