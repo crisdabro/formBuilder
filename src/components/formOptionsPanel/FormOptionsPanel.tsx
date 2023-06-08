@@ -87,7 +87,7 @@ const FormOptionsPanel = () => {
               <Text>Color principal</Text>
               <Input
                 type="color"
-                defaultValue={"s"}
+                defaultValue={form.options.mainColor}
                 onChange={(e) => handleColorChange(e, true)}
               />
             </Box>
@@ -95,6 +95,7 @@ const FormOptionsPanel = () => {
               <Text>Color secundario</Text>
               <Input
                 type="color"
+                defaultValue={form.options.secondaryColor}
                 onChange={(e) => handleColorChange(e, false)}
               />
             </Box>

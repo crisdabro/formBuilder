@@ -72,7 +72,10 @@ const FormView = ({ form }: Props) => {
             </>
           );
         })}
-      <DropFieldSection handleShowAddFieldModal={handleShowAddFieldModal} />
+      <DropFieldSection
+        handleShowAddFieldModal={handleShowAddFieldModal}
+        mainColor={form.options.secondaryColor}
+      />
       {form.fields
         .filter(({ type }) => type === "button")
         .map((field) => {

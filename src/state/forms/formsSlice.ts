@@ -37,8 +37,8 @@ const initialState: FormState = {
     ],
     options: {
       languages: ["castellano"],
-      mainColor: "white",
-      secondaryColor: "black",
+      mainColor: "#ffffff",
+      secondaryColor: "#000000",
     },
   },
   templateFields: [
@@ -155,6 +155,20 @@ export const formsSlice = createSlice({
     updateSecondaryColor: (state, action: PayloadAction<string>) => {
       state.form.options.secondaryColor = action.payload;
     },
+    moveUp: (state, action: PayloadAction<Field>) => {
+      console.log(action.payload.order);
+      const upperField = state.form.fields.find(
+        (f) => f?.order! + 1 === action.payload.order
+      );
+      if (upperField) {
+        const actualField = state.form.fields.find(
+          (f) => f.id === action.payload.id
+        );
+        actualField!.order = upperField.order;
+        upperField.order = action.payload.order;
+      }
+      state.form.fields.sort((a, b) => a.order! - b.order!);
+    },
   },
 
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -171,6 +185,7 @@ export const {
   addLanguage,
   updateMainColor,
   updateSecondaryColor,
+  moveUp,
 } = formsSlice.actions;
 
 export const selectForms = (state: RootState) => state.forms;

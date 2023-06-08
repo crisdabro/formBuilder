@@ -34,6 +34,7 @@ const TextField = ({
 
   return (
     <EditButtonWrapper
+      field={field}
       callback={() => handleShowAddFieldModal(true, field, true)}
     >
       <Box style={{ width: "100%", margin: "8px 0px 0px 0px" }}>

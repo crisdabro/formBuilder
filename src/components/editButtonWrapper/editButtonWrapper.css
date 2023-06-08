@@ -2,10 +2,18 @@
   display: none;
 }
 
+.button-left {
+  margin-left: -24px;
+  padding-right: 24px;
+}
+
+.field:hover .hide .button-right {
+  padding-left: 36px;
+}
+
 .field:hover .hide {
   display: block;
   width: 100%;
-  margin-left: -40px;
 }
 
 .field {

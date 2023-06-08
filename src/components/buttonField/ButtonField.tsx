@@ -46,6 +46,7 @@ const ButtonField = ({
   const { placeholder } = texts[0] || {};
   return (
     <EditButtonWrapper
+      field={field}
       callback={() => handleShowAddFieldModal(true, field, true)}
     >
       <Box style={{ width: "100%", margin: "8px 0px 0px 0px" }}>

@@ -22,9 +22,10 @@ interface Props {
     field: Field,
     isEditing: boolean
   ) => void;
+  mainColor: string;
 }
 
-const DropFieldSection = ({ handleShowAddFieldModal }: Props) => {
+const DropFieldSection = ({ handleShowAddFieldModal, mainColor }: Props) => {
   const dispatch = useAppDispatch();
   const { templateFields, isDragging } = useAppSelector(selectForms);
 
@@ -46,10 +47,13 @@ const DropFieldSection = ({ handleShowAddFieldModal }: Props) => {
       {isDragging && (
         <Box
           className="drop-section"
+          style={{
+            border: `1px dashed ${mainColor}`,
+          }}
           onDrop={handleDrop}
           onDragOver={handleDragOver}
         >
-          <AddIcon color={"rgb(9, 143, 192)"} />
+          <AddIcon color={mainColor} />
         </Box>
       )}
     </>
